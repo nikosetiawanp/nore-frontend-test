@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import IconPencil from "../assets/icon-pencil.svg";
 import IconTrash from "../assets/icon-trash.svg";
-import Form from "./Form";
+import EditForm from "./EditForm";
 
 export default function Card() {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,7 +14,7 @@ export default function Card() {
     <div className="shadow-lg w-full rounded-lg overflow-hidden bg-white">
       <Disclosure>
         {formIsActive ? (
-          <Form setFormIsActive={setFormIsActive} />
+          <EditForm setFormIsActive={setFormIsActive} />
         ) : (
           <>
             <Disclosure.Button

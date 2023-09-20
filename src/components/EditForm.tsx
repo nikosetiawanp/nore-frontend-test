@@ -1,6 +1,6 @@
 import IconPlus from "../assets/icon-plus.svg";
 
-export default function Form(props: {
+export default function EditForm(props: {
   setFormIsActive: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   return (

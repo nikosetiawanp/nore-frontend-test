@@ -2,6 +2,7 @@ import "./App.css";
 
 import IconPlus from "./assets/icon-plus.svg";
 import Card from "./components/Card";
+import NewForm from "./components/NewForm";
 
 function App() {
   return (
@@ -10,10 +11,7 @@ function App() {
         {/* TITLE */}
         <h1 className="text-accent-blue text-[64px] font-light">Offices</h1>
         {/* ADD NEW LOCATION BUTTON */}
-        <button className="flex justify-between items-center bg-accent-blue text-white font-light w-full px-6 py-4 rounded-lg shadow-md">
-          Add New Location
-          <img src={IconPlus} alt="icon-plus" />
-        </button>
+        <NewForm />
         <Card />
       </div>
       {/* FOOTER */}
