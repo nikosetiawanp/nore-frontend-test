@@ -39,7 +39,7 @@ export default function NewForm() {
             className="flex flex-col items-start"
           >
             {/* TITLE */}
-            <div className="w-full text-left relative">
+            <div className="w-full text-left relative mb-6">
               <label htmlFor="title" className="text-[16px]">
                 Title <span className="text-primary-grey font-regular">*</span>
               </label>{" "}
@@ -67,7 +67,7 @@ export default function NewForm() {
               )}
             </div>
             {/* ADDRESS */}
-            <div className="w-full text-left relative">
+            <div className="w-full text-left relative mb-6">
               <label htmlFor="address" className="text-[16px]">
                 Address{" "}
                 <span className="text-primary-grey font-regular">*</span>
@@ -101,7 +101,7 @@ export default function NewForm() {
             </span>
             <hr className="border-primary-lightgrey w-full mb-4" />
             {/* FULL NAME */}
-            <div className="w-full text-left relative">
+            <div className="w-full text-left relative mb-6">
               <label htmlFor="fullname" className="text-[16px]">
                 Full Name{" "}
                 <span className="text-primary-grey font-regular">*</span>
@@ -130,7 +130,7 @@ export default function NewForm() {
               )}
             </div>
             {/* JOB POSITION */}
-            <div className="w-full text-left relative">
+            <div className="w-full text-left relative mb-6">
               <label htmlFor="job" className="text-[16px]">
                 Job Position{" "}
                 <span className="text-primary-grey font-regular">*</span>
@@ -153,13 +153,13 @@ export default function NewForm() {
                     className="absolute right-3 top-9"
                   />
                   <p role="alert" className="text-accent-red text-[12px]">
-                    Job is a required field
+                    Job Position is a required field
                   </p>
                 </>
               )}
             </div>
             {/* EMAIL */}
-            <div className="w-full text-left relative">
+            <div className="w-full text-left relative mb-6">
               <label htmlFor="email" className="text-[16px]">
                 Email <span className="text-primary-grey font-regular">*</span>
               </label>{" "}
@@ -188,7 +188,7 @@ export default function NewForm() {
               )}
             </div>
             {/* PHONE */}
-            <div className="w-full text-left relative">
+            <div className="w-full text-left relative mb-6">
               <label htmlFor="phone" className="text-[16px]">
                 Phone <span className="text-primary-grey font-regular">*</span>
               </label>{" "}
