@@ -202,6 +202,7 @@ export default function NewForm() {
                 defaultValue=""
                 placeholder="(xxx) xxx-xxxx"
                 type="number"
+                {...register("phone", { required: true })}
                 className={`w-full h-[40px] p-2 rounded-md bg-white shadow-sm border outline-none  transition-all ${
                   errors.phone?.type === "required"
                     ? "border-accent-red focus:border-accent-red"
