@@ -2,15 +2,7 @@ import { useState } from "react";
 import IconPlus from "../assets/icon-plus.svg";
 import { useForm } from "react-hook-form";
 import IconExclamation from "../assets/icon-exclamation.svg";
-
-interface Inputs {
-  address: string;
-  email: string;
-  fullname: string;
-  job: string;
-  phone: number;
-  title: string;
-}
+import { AddOfficeBody } from "../shared/interfaces";
 
 export default function NewForm() {
   const [formIsActive, setFormIsActive] = useState(false);
@@ -18,9 +10,9 @@ export default function NewForm() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<AddOfficeBody>();
 
-  const onSubmit = (data: Inputs) => console.log(data);
+  const onSubmit = (data: AddOfficeBody) => console.log(data);
   return (
     <>
       {!formIsActive ? (

@@ -6,7 +6,9 @@ import IconPencil from "../assets/icon-pencil.svg";
 import IconTrash from "../assets/icon-trash.svg";
 import EditForm from "./EditForm";
 
-export default function Card() {
+import { OfficesResponse } from "../mock";
+
+export default function Card(props: { office: OfficesResponse["data"][0] }) {
   const [isOpen, setIsOpen] = useState(false);
   const [formIsActive, setFormIsActive] = useState(false);
 
@@ -29,10 +31,10 @@ export default function Card() {
                     isOpen ? "text-white" : "text-primary-darkblue"
                   }`}
                 >
-                  Headquarters
+                  {props.office.title}
                 </h4>
                 <p className={`${isOpen ? "text-white" : "text-primary-grey"}`}>
-                  3763 W. Dallas St.
+                  {props.office.address}
                 </p>
               </div>
               <img
@@ -45,16 +47,16 @@ export default function Card() {
             </Disclosure.Button>
             <Disclosure.Panel className="flex flex-col gap-3 items-start p-6 bg-white">
               <h5 className="text-primary-darkblue font-bold text-[20px]">
-                Hellena John
+                {props.office.detail.fullname}
               </h5>
               <p className="text-primary-darkblue text-[16px]">
-                Software Tester
+                {props.office.detail.job}
               </p>
               <p className="text-accent-blue text-[16px]">
-                georgia.young@example.com
+                {props.office.detail.email}
               </p>
               <p className="text-primary-darkblue text-[16px]">
-                (808) 555-0111
+                {props.office.detail.phone}
               </p>
               <hr className="border-primary-lightgrey w-full" />
               <div className="flex w-full justify-between items-center mt-2">
