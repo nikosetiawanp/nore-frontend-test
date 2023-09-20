@@ -48,9 +48,10 @@ export default function NewForm() {
                 defaultValue=""
                 placeholder="Headquarters"
                 {...register("title", { required: true })}
-                className={`w-full h-[40px] p-2 rounded-md bg-white shadow-sm border border-primary-grey focus:border-accent-blue outline-none  transition-all ${
-                  errors.title?.type === "required" &&
-                  "border-accent-red focus:border-accent-red"
+                className={`w-full h-[40px] p-2 rounded-md bg-white shadow-sm border outline-none  transition-all ${
+                  errors.title?.type === "required"
+                    ? "border-accent-red focus:border-accent-red"
+                    : "border-primary-grey focus:border-accent-blue"
                 }`}
               />
               {errors.title?.type === "required" && (
@@ -77,9 +78,10 @@ export default function NewForm() {
                 defaultValue=""
                 placeholder="3763 W. Dallas St."
                 {...register("address", { required: true })}
-                className={`w-full h-[40px] p-2 rounded-md bg-white shadow-sm border border-primary-grey focus:border-accent-blue outline-none  transition-all ${
-                  errors.address?.type === "required" &&
-                  "border-accent-red focus:border-accent-red"
+                className={`w-full h-[40px] p-2 rounded-md bg-white shadow-sm border outline-none  transition-all ${
+                  errors.address?.type === "required"
+                    ? "border-accent-red focus:border-accent-red"
+                    : "border-primary-grey focus:border-accent-blue"
                 }`}
               />
               {errors.address?.type === "required" && (
@@ -111,9 +113,10 @@ export default function NewForm() {
                 defaultValue=""
                 placeholder="John Michael"
                 {...register("fullname", { required: true })}
-                className={`w-full h-[40px] p-2 rounded-md bg-white shadow-sm border border-primary-grey focus:border-accent-blue outline-none  transition-all ${
-                  errors.fullname?.type === "required" &&
-                  "border-accent-red focus:border-accent-red"
+                className={`w-full h-[40px] p-2 rounded-md bg-white shadow-sm border outline-none  transition-all ${
+                  errors.fullname?.type === "required"
+                    ? "border-accent-red focus:border-accent-red"
+                    : "border-primary-grey focus:border-accent-blue"
                 }`}
               />
               {errors.fullname?.type === "required" && (
@@ -140,9 +143,10 @@ export default function NewForm() {
                 defaultValue=""
                 placeholder="Software Tester"
                 {...register("job", { required: true })}
-                className={`w-full h-[40px] p-2 rounded-md bg-white shadow-sm border border-primary-grey focus:border-accent-blue outline-none  transition-all ${
-                  errors.job?.type === "required" &&
-                  "border-accent-red focus:border-accent-red"
+                className={`w-full h-[40px] p-2 rounded-md bg-white shadow-sm border outline-none  transition-all ${
+                  errors.job?.type === "required"
+                    ? "border-accent-red focus:border-accent-red"
+                    : "border-primary-grey focus:border-accent-blue"
                 }`}
               />
               {errors.job?.type === "required" && (
@@ -169,9 +173,10 @@ export default function NewForm() {
                 placeholder="name@example.com"
                 type="email"
                 {...register("email", { required: true })}
-                className={`w-full h-[40px] p-2 rounded-md bg-white shadow-sm border border-primary-grey focus:border-accent-blue outline-none  transition-all ${
-                  errors.email?.type === "required" &&
-                  "border-accent-red focus:border-accent-red"
+                className={`w-full h-[40px] p-2 rounded-md bg-white shadow-sm border outline-none  transition-all ${
+                  errors.email?.type === "required"
+                    ? "border-accent-red focus:border-accent-red"
+                    : "border-primary-grey focus:border-accent-blue"
                 }`}
               />
               {errors.email?.type === "required" && (
@@ -197,10 +202,10 @@ export default function NewForm() {
                 defaultValue=""
                 placeholder="(xxx) xxx-xxxx"
                 type="number"
-                {...register("phone", { required: true })}
-                className={`w-full h-[40px] p-2 rounded-md bg-white shadow-sm border border-primary-grey focus:border-accent-blue outline-none  transition-all ${
-                  errors.phone?.type === "required" &&
-                  "border-accent-red focus:border-accent-red"
+                className={`w-full h-[40px] p-2 rounded-md bg-white shadow-sm border outline-none  transition-all ${
+                  errors.phone?.type === "required"
+                    ? "border-accent-red focus:border-accent-red"
+                    : "border-primary-grey focus:border-accent-blue"
                 }`}
               />
               {errors.phone?.type === "required" && (
