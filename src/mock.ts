@@ -85,7 +85,6 @@ mock.onDelete(/\/office\/\d+/).reply(200, {
 
 export const fetchOffices = async () => {
   const { data } = await axios.get<OfficesResponse>("/offices");
-  console.log(data);
   return data;
 };
 

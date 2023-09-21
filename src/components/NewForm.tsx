@@ -1,10 +1,18 @@
 import { useState } from "react";
-import IconPlus from "../assets/icon-plus.svg";
 import { useForm } from "react-hook-form";
+import IconCross from "../assets/icon-cross.svg";
+import IconPlus from "../assets/icon-plus.svg";
 import IconExclamation from "../assets/icon-exclamation.svg";
 import { AddOfficeBody } from "../shared/interfaces";
+import { addOffice, OfficesResponse } from "../mock";
+import { v4 as uuid } from "uuid";
 
-export default function NewForm() {
+export default function NewForm(props: {
+  setOffices: React.Dispatch<
+    React.SetStateAction<OfficesResponse["data"] | undefined>
+  >;
+  showNotification: (message: string, code: number) => void;
+}) {
   const [formIsActive, setFormIsActive] = useState(false);
   const {
     register,
@@ -12,7 +20,30 @@ export default function NewForm() {
     formState: { errors },
   } = useForm<AddOfficeBody>();
 
-  const onSubmit = (data: AddOfficeBody) => console.log(data);
+  const onSubmit = async (data: AddOfficeBody) => {
+    try {
+      const response = await addOffice(data);
+      props.showNotification(response.message, 200);
+      props.setOffices((current: OfficesResponse["data"] | undefined) => [
+        ...current,
+        {
+          id: uuid(),
+          title: data.title,
+          address: data.address,
+          detail: {
+            fullname: data.fullname,
+            job: data.job,
+            email: data.email,
+            phone: data.phone,
+          },
+        },
+      ]);
+      setFormIsActive(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       {!formIsActive ? (
@@ -30,6 +61,16 @@ export default function NewForm() {
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col items-start"
           >
+            <div className="flex justify-between mb-8 w-full">
+              <b className="text-[16px] text-primary-darkblue">New Location</b>
+              <button onClick={() => setFormIsActive(false)}>
+                <img
+                  className="w-[20px] h-[20px]"
+                  src={IconCross}
+                  alt="icon-cross"
+                />
+              </button>
+            </div>
             {/* TITLE */}
             <div className="w-full text-left relative mb-6">
               <label htmlFor="title" className="text-[16px]">

@@ -6,17 +6,42 @@ import IconPencil from "../assets/icon-pencil.svg";
 import IconTrash from "../assets/icon-trash.svg";
 import EditForm from "./EditForm";
 
-import { OfficesResponse } from "../mock";
+import { OfficesResponse, deleteOffice } from "../mock";
+import { useMutation, useQueryClient, useQuery } from "react-query";
 
-export default function Card(props: { office: OfficesResponse["data"][0] }) {
+export default function Card(props: {
+  office: OfficesResponse["data"][0];
+  setOffices: React.Dispatch<
+    React.SetStateAction<OfficesResponse["data"] | undefined>
+  >;
+  showNotification: (message: string, code: number) => void;
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [formIsActive, setFormIsActive] = useState(false);
+
+  const removeOffice = async (id: string) => {
+    try {
+      const response = await deleteOffice(id);
+      props.showNotification(response.message, 200);
+      console.log(response.code);
+      props.setOffices((current) =>
+        current?.filter((office) => office.id !== props.office.id)
+      );
+    } catch (error: any | unknown) {
+      console.log(error.name);
+
+      // props.setOffices((current) =>
+      //   current?.filter((office) => office.id !== props.office.id)
+      // );
+      props.showNotification(error.message, 404);
+    }
+  };
 
   return (
     <div className="shadow-lg w-full rounded-lg overflow-hidden bg-white">
       <Disclosure>
         {formIsActive ? (
-          <EditForm setFormIsActive={setFormIsActive} />
+          <EditForm setFormIsActive={setFormIsActive} office={props.office} />
         ) : (
           <>
             <Disclosure.Button
@@ -66,7 +91,11 @@ export default function Card(props: { office: OfficesResponse["data"][0] }) {
                 >
                   <img src={IconPencil} alt="icon-pencil" /> EDIT
                 </button>
-                <button className="text-[12px] text-accent-red flex justify-between items-center gap-2">
+                {/* DELETE */}
+                <button
+                  onClick={() => removeOffice(`${props.office.id}`)}
+                  className="text-[12px] text-accent-red flex justify-between items-center gap-2"
+                >
                   <img src={IconTrash} alt="icon-trash" /> DELETE
                 </button>
               </div>
