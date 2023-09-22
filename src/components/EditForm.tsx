@@ -2,7 +2,6 @@ import { AddOfficeBody, OfficesResponse, addOffice } from "../mock";
 import IconExclamation from "../assets/icon-exclamation.svg";
 import { useForm } from "react-hook-form";
 import { v4 as uuid } from "uuid";
-import IconCross from "../assets/icon-cross.svg";
 
 export default function EditForm(props: {
   office: OfficesResponse["data"][0];
@@ -52,11 +51,20 @@ export default function EditForm(props: {
         <div className="flex justify-between mb-8 w-full">
           <b className="text-[16px] text-primary-darkblue">New Location</b>
           <button onClick={() => props.setFormIsActive(false)}>
-            <img
-              className="w-[20px] h-[20px]"
-              src={IconCross}
-              alt="icon-cross"
-            />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6 text-primary-grey"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
           </button>
         </div>
         {/* TITLE */}

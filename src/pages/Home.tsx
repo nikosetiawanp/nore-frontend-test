@@ -13,6 +13,7 @@ export default function Home() {
   );
   const [notification, setNotification] = useState({ message: "", code: 0 });
   const showNotification = (message: string, code: number) => {
+    setNotification({ message: "", code: 0 });
     setNotification({ message: message, code: code });
     setTimeout(() => {
       setNotification({ message: "", code: 0 });
@@ -40,12 +41,10 @@ export default function Home() {
 
   return (
     <div className="fixed top-0 left-0 w-screen h-screen flex flex-col justify-start items-center bg-primary-lightgrey overflow-y-scroll py-20">
-      {notification.message && notification.code && (
-        <Notification
-          notification={notification}
-          setNotification={setNotification}
-        />
-      )}
+      <Notification
+        notification={notification}
+        setNotification={setNotification}
+      />
 
       <div className="flex flex-col gap-4 items-center w-full max-w-[350px]">
         {/* TITLE */}

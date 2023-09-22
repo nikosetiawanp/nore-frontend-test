@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import IconCross from "../assets/icon-cross.svg";
-import IconPlus from "../assets/icon-plus.svg";
 import IconExclamation from "../assets/icon-exclamation.svg";
-import { AddOfficeBody } from "../shared/interfaces";
+import { AddOfficeBody } from "../mock";
 import { addOffice, OfficesResponse } from "../mock";
 import { v4 as uuid } from "uuid";
 
@@ -52,7 +50,20 @@ export default function NewForm(props: {
           className="flex justify-between items-center bg-accent-blue text-white font-light w-full px-6 py-4 rounded-lg shadow-md"
         >
           Add New Location
-          <img src={IconPlus} alt="icon-plus" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6 text-white"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 4.5v15m7.5-7.5h-15"
+            />
+          </svg>
         </button>
       ) : (
         <div className="bg-white p-6 w-full shadow-lg rounded-lg">
@@ -64,11 +75,20 @@ export default function NewForm(props: {
             <div className="flex justify-between mb-8 w-full">
               <b className="text-[16px] text-primary-darkblue">New Location</b>
               <button onClick={() => setFormIsActive(false)}>
-                <img
-                  className="w-[20px] h-[20px]"
-                  src={IconCross}
-                  alt="icon-cross"
-                />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6 text-primary-grey"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
               </button>
             </div>
             {/* TITLE */}
