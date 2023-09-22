@@ -1,15 +1,18 @@
-import { AddOfficeBody, OfficesResponse, addOffice } from "../mock";
+import { AddOfficeBody, OfficesResponse, updateOffice } from "../mock";
 import { useForm } from "react-hook-form";
-import { v4 as uuid } from "uuid";
+import SpinnerWhite from "../assets/spinner-white.svg";
+import { useState } from "react";
 
 export default function EditForm(props: {
   office: OfficesResponse["data"][0];
+  offices: OfficesResponse["data"];
   setOffices: React.Dispatch<
     React.SetStateAction<OfficesResponse["data"] | undefined>
   >;
   setFormIsActive: React.Dispatch<React.SetStateAction<boolean>>;
-  showNotification: (message: string) => void;
+  showNotification: (message: string, code: number) => void;
 }) {
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -17,13 +20,16 @@ export default function EditForm(props: {
   } = useForm<AddOfficeBody>();
 
   const onSubmit = async (data: AddOfficeBody) => {
+    setIsLoading(true);
     try {
-      const response = await addOffice(data);
-      props.showNotification(response.message);
-      props.setOffices((current: OfficesResponse["data"] | undefined) => [
-        ...current,
-        {
-          id: uuid(),
+      const updatedOffice = [...props.offices];
+      const indexToUpdate = updatedOffice.findIndex(
+        (office) => office.id == props.office.id
+      );
+
+      if (indexToUpdate !== -1) {
+        updatedOffice[indexToUpdate] = {
+          id: props.office.id,
           title: data.title,
           address: data.address,
           detail: {
@@ -32,11 +38,16 @@ export default function EditForm(props: {
             email: data.email,
             phone: data.phone,
           },
-        },
-      ]);
-      props.setFormIsActive(false);
-    } catch (error) {
-      console.log(error);
+        };
+        props.setOffices(updatedOffice);
+      }
+
+      const response = await updateOffice(props.office.id, data);
+      props.showNotification(response.message, 200);
+      setIsLoading(false);
+    } catch (error: any | unknown) {
+      props.showNotification(error.message, 404);
+      setIsLoading(false);
     }
   };
 
@@ -75,14 +86,19 @@ export default function EditForm(props: {
             id="title"
             defaultValue={props.office.title}
             placeholder="Headquarters"
-            {...register("title", { required: true })}
+            {...register("title", {
+              required: {
+                value: true,
+                message: "Title is a required field",
+              },
+            })}
             className={`w-full h-[40px] p-2 rounded-md bg-white shadow-sm border outline-none  transition-all ${
               errors.title?.type === "required"
                 ? "border-accent-red focus:border-accent-red"
                 : "border-primary-grey focus:border-accent-blue"
             }`}
           />
-          {errors.title?.type === "required" && (
+          {errors.title && (
             <>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -97,7 +113,7 @@ export default function EditForm(props: {
                 />
               </svg>
               <p role="alert" className="text-accent-red text-[12px]">
-                Title is a required field
+                {errors?.title.message}
               </p>
             </>
           )}
@@ -111,14 +127,19 @@ export default function EditForm(props: {
             id="address"
             defaultValue={props.office.address}
             placeholder="3763 W. Dallas St."
-            {...register("address", { required: true })}
+            {...register("address", {
+              required: {
+                value: true,
+                message: "Address is a required field",
+              },
+            })}
             className={`w-full h-[40px] p-2 rounded-md bg-white shadow-sm border outline-none  transition-all ${
               errors.address?.type === "required"
                 ? "border-accent-red focus:border-accent-red"
                 : "border-primary-grey focus:border-accent-blue"
             }`}
           />
-          {errors.address?.type === "required" && (
+          {errors.address && (
             <>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -133,7 +154,7 @@ export default function EditForm(props: {
                 />
               </svg>
               <p role="alert" className="text-accent-red text-[12px]">
-                Address is a required field
+                {errors?.address.message}
               </p>
             </>
           )}
@@ -152,14 +173,19 @@ export default function EditForm(props: {
             id="fullname"
             defaultValue={props.office.detail.fullname}
             placeholder="John Michael"
-            {...register("fullname", { required: true })}
+            {...register("fullname", {
+              required: {
+                value: true,
+                message: "Fullname is a required field",
+              },
+            })}
             className={`w-full h-[40px] p-2 rounded-md bg-white shadow-sm border outline-none  transition-all ${
               errors.fullname?.type === "required"
                 ? "border-accent-red focus:border-accent-red"
                 : "border-primary-grey focus:border-accent-blue"
             }`}
           />
-          {errors.fullname?.type === "required" && (
+          {errors.fullname && (
             <>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -174,7 +200,7 @@ export default function EditForm(props: {
                 />
               </svg>
               <p role="alert" className="text-accent-red text-[12px]">
-                Full Name is a required field
+                {errors?.fullname.message}
               </p>
             </>
           )}
@@ -189,14 +215,19 @@ export default function EditForm(props: {
             id="job"
             defaultValue={props.office.detail.job}
             placeholder="Software Tester"
-            {...register("job", { required: true })}
+            {...register("job", {
+              required: {
+                value: true,
+                message: "Job title is a required field",
+              },
+            })}
             className={`w-full h-[40px] p-2 rounded-md bg-white shadow-sm border outline-none  transition-all ${
               errors.job?.type === "required"
                 ? "border-accent-red focus:border-accent-red"
                 : "border-primary-grey focus:border-accent-blue"
             }`}
           />
-          {errors.job?.type === "required" && (
+          {errors.job && (
             <>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -211,7 +242,7 @@ export default function EditForm(props: {
                 />
               </svg>
               <p role="alert" className="text-accent-red text-[12px]">
-                Job Position is a required field
+                {errors?.job.message}
               </p>
             </>
           )}
@@ -226,14 +257,24 @@ export default function EditForm(props: {
             defaultValue={props.office.detail.email}
             placeholder="name@example.com"
             type="email"
-            {...register("email", { required: true })}
+            {...register("email", {
+              required: {
+                value: true,
+                message: "Email is a required field",
+              },
+              pattern: {
+                value:
+                  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                message: "Entered value does not match email format",
+              },
+            })}
             className={`w-full h-[40px] p-2 rounded-md bg-white shadow-sm border outline-none  transition-all ${
-              errors.email?.type === "required"
+              errors?.email
                 ? "border-accent-red focus:border-accent-red"
                 : "border-primary-grey focus:border-accent-blue"
             }`}
           />
-          {errors.email?.type === "required" && (
+          {errors.email && (
             <>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -248,7 +289,7 @@ export default function EditForm(props: {
                 />
               </svg>
               <p role="alert" className="text-accent-red text-[12px]">
-                Email is a required field
+                {errors?.email.message}
               </p>
             </>
           )}
@@ -263,14 +304,19 @@ export default function EditForm(props: {
             defaultValue={props.office.detail.phone}
             placeholder="(xxx) xxx-xxxx"
             type="text"
-            {...register("phone", { required: true })}
+            {...register("phone", {
+              required: {
+                value: true,
+                message: "Phone is a required field",
+              },
+            })}
             className={`w-full h-[40px] p-2 rounded-md bg-white shadow-sm border outline-none  transition-all ${
               errors.phone?.type === "required"
                 ? "border-accent-red focus:border-accent-red"
                 : "border-primary-grey focus:border-accent-blue"
             }`}
           />
-          {errors.phone?.type === "required" && (
+          {errors.phone && (
             <>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -285,7 +331,7 @@ export default function EditForm(props: {
                 />
               </svg>
               <p role="alert" className="text-accent-red text-[12px]">
-                Phone is a required field
+                {errors?.phone.message}
               </p>
             </>
           )}
@@ -293,10 +339,19 @@ export default function EditForm(props: {
         <div className="flex justify-start">
           <button
             type="button"
-            className="bg-accent-blue px-6 py-2 rounded-md text-white disabled:bg-primary-grey"
+            className="bg-accent-blue px-6 py-2 rounded-md text-white disabled:bg-primary-grey w-[80px] h-[40px] flex justify-center items-center"
             onClick={handleSubmit(onSubmit)}
+            disabled={isLoading}
           >
-            Save
+            {isLoading ? (
+              <img
+                className="w-[20px]"
+                src={SpinnerWhite}
+                alt="spinner-white"
+              />
+            ) : (
+              "Save"
+            )}
           </button>
         </div>
       </form>

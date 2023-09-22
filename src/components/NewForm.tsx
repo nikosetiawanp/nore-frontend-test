@@ -4,12 +4,15 @@ import { AddOfficeBody } from "../mock";
 import { addOffice, OfficesResponse } from "../mock";
 import { v4 as uuid } from "uuid";
 
+import SpinnerWhite from "../assets/spinner-white.svg";
+
 export default function NewForm(props: {
   setOffices: React.Dispatch<
     React.SetStateAction<OfficesResponse["data"] | undefined>
   >;
   showNotification: (message: string, code: number) => void;
 }) {
+  const [isLoading, setIsLoading] = useState(false);
   const [formIsActive, setFormIsActive] = useState(false);
   const {
     register,
@@ -18,10 +21,9 @@ export default function NewForm(props: {
   } = useForm<AddOfficeBody>();
 
   const onSubmit = async (data: AddOfficeBody) => {
+    setIsLoading(true);
     try {
-      const response = await addOffice(data);
-      props.showNotification(response.message, 200);
-      props.setOffices((current: OfficesResponse["data"] | undefined) => [
+      props.setOffices((current: OfficesResponse["data"] | any) => [
         ...current,
         {
           id: uuid(),
@@ -35,7 +37,10 @@ export default function NewForm(props: {
           },
         },
       ]);
+      const response = await addOffice(data);
+      props.showNotification(response.message, 200);
       setFormIsActive(false);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -99,7 +104,12 @@ export default function NewForm(props: {
                 id="title"
                 defaultValue=""
                 placeholder="Headquarters"
-                {...register("title", { required: true })}
+                {...register("title", {
+                  required: {
+                    value: true,
+                    message: "Title is a required field",
+                  },
+                })}
                 className={`w-full h-[40px] p-2 rounded-md bg-white shadow-sm border outline-none  transition-all ${
                   errors.title?.type === "required"
                     ? "border-accent-red focus:border-accent-red"
@@ -122,7 +132,7 @@ export default function NewForm(props: {
                   </svg>
 
                   <p role="alert" className="text-accent-red text-[12px]">
-                    Title is a required field
+                    {errors?.title.message}
                   </p>
                 </>
               )}
@@ -137,7 +147,12 @@ export default function NewForm(props: {
                 id="address"
                 defaultValue=""
                 placeholder="3763 W. Dallas St."
-                {...register("address", { required: true })}
+                {...register("address", {
+                  required: {
+                    value: true,
+                    message: "Address is a required field",
+                  },
+                })}
                 className={`w-full h-[40px] p-2 rounded-md bg-white shadow-sm border outline-none  transition-all ${
                   errors.address?.type === "required"
                     ? "border-accent-red focus:border-accent-red"
@@ -159,7 +174,7 @@ export default function NewForm(props: {
                     />
                   </svg>
                   <p role="alert" className="text-accent-red text-[12px]">
-                    Address is a required field
+                    {errors?.address.message}
                   </p>
                 </>
               )}
@@ -179,7 +194,12 @@ export default function NewForm(props: {
                 id="fullname"
                 defaultValue=""
                 placeholder="John Michael"
-                {...register("fullname", { required: true })}
+                {...register("fullname", {
+                  required: {
+                    value: true,
+                    message: "Fullname is a required field",
+                  },
+                })}
                 className={`w-full h-[40px] p-2 rounded-md bg-white shadow-sm border outline-none  transition-all ${
                   errors.fullname?.type === "required"
                     ? "border-accent-red focus:border-accent-red"
@@ -201,7 +221,7 @@ export default function NewForm(props: {
                     />
                   </svg>
                   <p role="alert" className="text-accent-red text-[12px]">
-                    Full Name is a required field
+                    {errors?.fullname.message}
                   </p>
                 </>
               )}
@@ -216,7 +236,12 @@ export default function NewForm(props: {
                 id="job"
                 defaultValue=""
                 placeholder="Software Tester"
-                {...register("job", { required: true })}
+                {...register("job", {
+                  required: {
+                    value: true,
+                    message: "Job title is a required field",
+                  },
+                })}
                 className={`w-full h-[40px] p-2 rounded-md bg-white shadow-sm border outline-none  transition-all ${
                   errors.job?.type === "required"
                     ? "border-accent-red focus:border-accent-red"
@@ -238,7 +263,7 @@ export default function NewForm(props: {
                     />
                   </svg>
                   <p role="alert" className="text-accent-red text-[12px]">
-                    Job Position is a required field
+                    {errors?.job.message}
                   </p>
                 </>
               )}
@@ -253,14 +278,24 @@ export default function NewForm(props: {
                 defaultValue=""
                 placeholder="name@example.com"
                 type="email"
-                {...register("email", { required: true })}
+                {...register("email", {
+                  required: {
+                    value: true,
+                    message: "Email is a required field",
+                  },
+                  pattern: {
+                    value:
+                      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                    message: "Entered value does not match email format",
+                  },
+                })}
                 className={`w-full h-[40px] p-2 rounded-md bg-white shadow-sm border outline-none  transition-all ${
-                  errors.email?.type === "required"
+                  errors?.email
                     ? "border-accent-red focus:border-accent-red"
                     : "border-primary-grey focus:border-accent-blue"
                 }`}
               />
-              {errors.email?.type === "required" && (
+              {errors.email && (
                 <>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -275,7 +310,7 @@ export default function NewForm(props: {
                     />
                   </svg>
                   <p role="alert" className="text-accent-red text-[12px]">
-                    Email is a required field
+                    {errors.email.message}
                   </p>
                 </>
               )}
@@ -290,7 +325,12 @@ export default function NewForm(props: {
                 defaultValue=""
                 placeholder="(xxx) xxx-xxxx"
                 type="number"
-                {...register("phone", { required: true })}
+                {...register("phone", {
+                  required: {
+                    value: true,
+                    message: "Phone is a required field",
+                  },
+                })}
                 className={`w-full h-[40px] p-2 rounded-md bg-white shadow-sm border outline-none  transition-all ${
                   errors.phone?.type === "required"
                     ? "border-accent-red focus:border-accent-red"
@@ -312,7 +352,7 @@ export default function NewForm(props: {
                     />
                   </svg>
                   <p role="alert" className="text-accent-red text-[12px]">
-                    Phone is a required field
+                    {errors?.phone.message}
                   </p>
                 </>
               )}
@@ -320,10 +360,19 @@ export default function NewForm(props: {
             <div className="flex justify-start">
               <button
                 type="button"
-                className="bg-accent-blue px-6 py-2 rounded-md text-white disabled:bg-primary-grey"
+                className="bg-accent-blue px-6 py-2 rounded-md text-white disabled:bg-primary-grey w-[80px] h-[40px] flex justify-center items-center"
                 onClick={handleSubmit(onSubmit)}
+                disabled={isLoading}
               >
-                Save
+                {isLoading ? (
+                  <img
+                    className="w-[20px]"
+                    src={SpinnerWhite}
+                    alt="spinner-white"
+                  />
+                ) : (
+                  "Save"
+                )}
               </button>
             </div>
           </form>

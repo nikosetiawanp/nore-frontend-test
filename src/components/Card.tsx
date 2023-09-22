@@ -1,27 +1,32 @@
 import { useState } from "react";
-
 import EditForm from "./EditForm";
+import SpinnerGrey from "../assets/spinner-grey.svg";
 
 import { OfficesResponse, deleteOffice } from "../mock";
 
 export default function Card(props: {
   office: OfficesResponse["data"][0];
+  offices: OfficesResponse["data"];
   setOffices: React.Dispatch<
     React.SetStateAction<OfficesResponse["data"] | undefined>
   >;
   showNotification: (message: string, code: number) => void;
 }) {
+  const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [formIsActive, setFormIsActive] = useState(false);
 
   const removeOffice = async (id: string) => {
+    setIsLoading(true);
     try {
       const response = await deleteOffice(id);
       props.showNotification(response.message, 200);
       props.setOffices((current) =>
         current?.filter((office) => office.id !== props.office.id)
       );
+      // setIsLoading(false);
     } catch (error: any | unknown) {
+      setIsLoading(false);
       props.showNotification(error.message, 404);
     }
   };
@@ -29,7 +34,13 @@ export default function Card(props: {
   return (
     <div className="shadow-lg w-full rounded-lg overflow-hidden bg-white">
       {formIsActive ? (
-        <EditForm setFormIsActive={setFormIsActive} office={props.office} />
+        <EditForm
+          setFormIsActive={setFormIsActive}
+          office={props.office}
+          offices={props.offices}
+          setOffices={props.setOffices}
+          showNotification={props.showNotification}
+        />
       ) : (
         <>
           <button
@@ -109,26 +120,39 @@ export default function Card(props: {
                 EDIT
               </button>
               {/* DELETE */}
-              <button
-                onClick={() => removeOffice(`${props.office.id}`)}
-                className="text-[12px] text-accent-red flex justify-between items-center gap-2"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-6 h-6 text-accent-red"
+              {isLoading ? (
+                <button
+                  onClick={() => removeOffice(`${props.office.id}`)}
+                  className="text-[12px] text-accent-red flex justify-center items-center gap-2 w-20"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                  <img
+                    className="w-[20px]"
+                    src={SpinnerGrey}
+                    alt="spinner-grey"
                   />
-                </svg>
-                DELETE
-              </button>
+                </button>
+              ) : (
+                <button
+                  onClick={() => removeOffice(`${props.office.id}`)}
+                  className="text-[12px] text-accent-red flex justify-between items-center gap-2 w-20"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6 text-accent-red"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                    />
+                  </svg>
+                  DELETE
+                </button>
+              )}
             </div>
           </div>
         </>

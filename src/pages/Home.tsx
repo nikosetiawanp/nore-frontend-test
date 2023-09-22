@@ -55,6 +55,7 @@ export default function Home() {
           <Card
             key={office.id}
             office={office}
+            offices={offices}
             setOffices={setOffices}
             showNotification={showNotification}
           />
