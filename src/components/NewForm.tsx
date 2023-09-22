@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import IconExclamation from "../assets/icon-exclamation.svg";
 import { AddOfficeBody } from "../mock";
 import { addOffice, OfficesResponse } from "../mock";
 import { v4 as uuid } from "uuid";
@@ -109,11 +108,19 @@ export default function NewForm(props: {
               />
               {errors.title?.type === "required" && (
                 <>
-                  <img
-                    src={IconExclamation}
-                    alt="icon-exclamation"
-                    className="absolute right-3 top-9"
-                  />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="w-6 h-6 text-accent-red absolute right-2 top-8"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+
                   <p role="alert" className="text-accent-red text-[12px]">
                     Title is a required field
                   </p>
@@ -139,11 +146,18 @@ export default function NewForm(props: {
               />
               {errors.address?.type === "required" && (
                 <>
-                  <img
-                    src={IconExclamation}
-                    alt="icon-exclamation"
-                    className="absolute right-3 top-9"
-                  />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="w-6 h-6 text-accent-red absolute right-2 top-8"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
                   <p role="alert" className="text-accent-red text-[12px]">
                     Address is a required field
                   </p>
@@ -174,11 +188,18 @@ export default function NewForm(props: {
               />
               {errors.fullname?.type === "required" && (
                 <>
-                  <img
-                    src={IconExclamation}
-                    alt="icon-exclamation"
-                    className="absolute right-3 top-9"
-                  />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="w-6 h-6 text-accent-red absolute right-2 top-8"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
                   <p role="alert" className="text-accent-red text-[12px]">
                     Full Name is a required field
                   </p>
@@ -204,11 +225,18 @@ export default function NewForm(props: {
               />
               {errors.job?.type === "required" && (
                 <>
-                  <img
-                    src={IconExclamation}
-                    alt="icon-exclamation"
-                    className="absolute right-3 top-9"
-                  />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="w-6 h-6 text-accent-red absolute right-2 top-8"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
                   <p role="alert" className="text-accent-red text-[12px]">
                     Job Position is a required field
                   </p>
@@ -234,11 +262,18 @@ export default function NewForm(props: {
               />
               {errors.email?.type === "required" && (
                 <>
-                  <img
-                    src={IconExclamation}
-                    alt="icon-exclamation"
-                    className="absolute right-3 top-9"
-                  />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="w-6 h-6 text-accent-red absolute right-2 top-8"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
                   <p role="alert" className="text-accent-red text-[12px]">
                     Email is a required field
                   </p>
@@ -264,11 +299,18 @@ export default function NewForm(props: {
               />
               {errors.phone?.type === "required" && (
                 <>
-                  <img
-                    src={IconExclamation}
-                    alt="icon-exclamation"
-                    className="absolute right-3 top-9"
-                  />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="w-6 h-6 text-accent-red absolute right-2 top-8"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
                   <p role="alert" className="text-accent-red text-[12px]">
                     Phone is a required field
                   </p>
